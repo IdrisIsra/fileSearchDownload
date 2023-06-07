@@ -1,3 +1,5 @@
+This is a page that lets you search, filter and download files.
+
 ## How to run:
 
 Create a .env file with a postgres connection string:
