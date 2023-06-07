@@ -72,11 +72,11 @@ export function FileList({ allFiles }: FileListProps) {
   const isFiltered = category.length || productType.length
 
   return (
-    <div className="space-y-5 rounded-md border p-5">
+    <div className="space-y-5 rounded-md border p-2 md:p-5">
       <div className="flex flex-wrap gap-2">
         <Input
           placeholder="Search..."
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-full lg:w-[250px]"
           onChange={(event) => setSearch(event.target.value)}
         />
         <FacetedFilter
@@ -106,18 +106,18 @@ export function FileList({ allFiles }: FileListProps) {
         ) : null
         }
       </div>
-      <div className="grid grid-cols-12 gap-5">
+      <div className="grid grid-cols-12 gap-2 md:gap-5">
         {filteredFiles.map((file) => (
           <Link
             href={`/files/${file.fileName}`}
             target="_blank"
             rel="noreferrer"
-            className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg  p-5 hover:bg-secondary md:col-span-3"
+            className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
             key={file.fileName}
           >
             <Icons.fileVideo className="h-32 w-32" />
-            <p className=" text-lg">{file.fileName}</p>
-            <p className=" text-sm">{file.productName}</p>
+            <p className="w-full break-words text-center text-lg">{file.fileName}</p>
+            <p className="w-full break-words text-center text-sm">{file.productName}</p>
           </Link>
         ))}
       </div>
