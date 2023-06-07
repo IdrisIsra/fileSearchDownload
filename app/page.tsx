@@ -1,9 +1,8 @@
 import { db } from "@/db"
-import { files } from "@/db/schema"
 import { FileList } from "@/components/file-list"
 
 export default async function IndexPage() {
-  const allFiles = await db.select().from(files)
+  const allFiles = await db.query.files.findMany()
 
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -18,7 +17,7 @@ export default async function IndexPage() {
         </p>
         <p className="max-w-[700px] text-lg text-muted-foreground"></p>
       </div>
-     <FileList allFiles={allFiles} />
+      <FileList allFiles={allFiles} />
     </section>
   )
 }

@@ -107,13 +107,13 @@ export function FileList({ allFiles }: FileListProps) {
         }
       </div>
       <div className="grid grid-cols-12 gap-2 md:gap-5">
-        {filteredFiles.map((file) => (
+        {filteredFiles.map((file, index) => (
           <Link
             href={`/files/${file.fileName}`}
             target="_blank"
             rel="noreferrer"
             className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
-            key={file.fileName}
+            key={index}
           >
             <Icons.fileVideo className="h-32 w-32" />
             <p className="w-full break-words text-center text-lg">{file.fileName}</p>
