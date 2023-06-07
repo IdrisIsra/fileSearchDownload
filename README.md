@@ -1,22 +1,25 @@
-# next-template
+## How to run:
 
-A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
-
-## Usage
+Create a .env file with a postgres connection string:
 
 ```bash
-npx create-next-app -e https://github.com/shadcn/next-template
+DB_CONNECTION_STRING=YOUR_CONNECTION_STRING
+```
+
+Then install dependencies and run dev server:
+
+```bash
+npm install
+npm run dev
 ```
 
 ## Features
 
 - Next.js 13 App Directory
-- Radix UI Primitives
+- Drizzle ORM
+- Radix UI Primitives composed as shadcn components
 - Tailwind CSS
 - Icons from [Lucide](https://lucide.dev)
 - Dark mode with `next-themes`
 - Tailwind CSS class sorting, merging and linting.
 
-## License
-
-Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
