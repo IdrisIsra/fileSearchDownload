@@ -73,7 +73,7 @@ export function FileList({ allFiles }: FileListProps) {
 
   return (
     <div className="space-y-5 rounded-md border p-5">
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Input
           placeholder="Search..."
           className="h-8 w-[150px] lg:w-[250px]"
