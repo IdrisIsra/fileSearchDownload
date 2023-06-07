@@ -19,7 +19,7 @@ npm run dev
 
 - Next.js 13 App Directory
 - Drizzle ORM
-- Radix UI Primitives composed as shadcn components
+- Radix UI Primitives composed as [shadcn components](https://ui.shadcn.com/)
 - Tailwind CSS
 - Icons from [Lucide](https://lucide.dev)
 - Dark mode with `next-themes`
