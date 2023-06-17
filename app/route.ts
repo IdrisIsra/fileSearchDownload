@@ -9,6 +9,8 @@ export async function GET(request: Request) {
   const referer = headersList.get("referer")
 
   cookieStore.set("referer", referer ?? "")
+  
+  console.log({ headersList, referer })
 
   redirect("/download")
 }
