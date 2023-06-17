@@ -8,11 +8,11 @@ export async function GET(request: Request) {
   const referer = headersList.get("referer")
   const token = cookieStore.get("referer")?.value
 
-  if (token?.includes("vercel.com")) {
+  if (token?.includes("snoc.com.tr")) {
     redirect("/download")
   }
 
-  if (referer?.includes("vercel.com")) {
+  if (referer?.includes("snoc.com.tr")) {
     cookieStore.set("referer", referer ?? "")
     redirect("/download")
   }
