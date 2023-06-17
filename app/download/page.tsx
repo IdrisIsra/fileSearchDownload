@@ -1,4 +1,5 @@
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 import { db } from "@/db"
 
 import { FileList } from "@/components/file-list"
@@ -8,12 +9,11 @@ export const dynamic = "auto"
 export default async function IndexPage() {
   const allFiles = await db.query.files.findMany()
 
-  // async function addItem(data) {
-  //   "use server"
+  const referer = cookies().get("referer")?.value
 
-  //   const cartId = cookies().get("cartId")?.value
-  //   await saveToDb({ cartId, data })
-  // }
+  if (!referer?.includes("vercel.com")) {
+    redirect("/")
+  }
 
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">

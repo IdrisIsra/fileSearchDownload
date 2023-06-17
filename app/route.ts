@@ -8,13 +8,16 @@ export async function GET(request: Request) {
   const referer = headersList.get("referer")
   cookieStore.set("referer", referer ?? "")
 
-  const token = cookieStore.get("referer")
+  const token = cookieStore.get("referer")?.value
 
-  if (token?.value.includes("vercel.com")) {
+  if (token?.includes("vercel.com")) {
     redirect("/download")
   }
 
-  return new Response("Üzgünüz, ancak bu sayfaya erişiminiz yok. Kimliğinizi doğrulamak için lütfen bu sayfaya snoc.com.tr'deki bağlantınızdan ulaşın.", {
-    status: 401,
-  })
+  return new Response(
+    "Üzgünüz, ancak bu sayfaya erişiminiz yok. Kimliğinizi doğrulamak için lütfen bu sayfaya snoc.com.tr'deki bağlantınızdan ulaşın.",
+    {
+      status: 401,
+    }
+  )
 }
