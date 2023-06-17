@@ -13,4 +13,8 @@ export async function GET(request: Request) {
   if (token?.value.includes("vercel.com")) {
     redirect("/download")
   }
+
+  return new Response("Üzgünüz, ancak bu sayfaya erişiminiz yok. Kimliğinizi doğrulamak için lütfen bu sayfaya snoc.com.tr'deki bağlantınızdan ulaşın.", {
+    status: 401,
+  })
 }
