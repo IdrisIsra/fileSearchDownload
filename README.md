@@ -1,4 +1,4 @@
-This is a page that lets you search, filter and download files.
+This is a page that lets you search, filter and download files. It also has a route interceptor that checks for a specific referer, and sets referer to a cookie for a poor man's authentication system.
 
 ## How to run:
 
