@@ -43,9 +43,9 @@ export default async function IndexPage({
     : ""
   const initialFileType = fileTypes.has(firstSlug) ? firstSlug : ""
 
-  // if (!referer?.includes("snoc.com.tr")) {
-  //   redirect("/")
-  // }
+  if (!referer?.includes("snoc.com.tr")) {
+    redirect("/")
+  }
 
   const isImageView = () => {
     if (!firstSlug) {
