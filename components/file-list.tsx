@@ -53,7 +53,6 @@ export function FileList({
         if (file.fileType) return fileType.includes(file.fileType)
       })
     }
-
     files = files.filter((file) => {
       return (
         file.fileName?.toLowerCase().includes(search.toLowerCase()) ||
@@ -95,61 +94,76 @@ export function FileList({
   }, [allFiles])
 
   const renderItems = () => {
+    if (category && productType) {
+      return renderAlternative(filteredFiles)
+    }
     if (!isImageView || search) {
-      return filteredFiles.map((file, index) => (
-        <Link
-          href={`/files/${file.fileName}`}
-          target="_blank"
-          rel="noreferrer"
-          className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
-          key={index}
-        >
-          <Icons.fileVideo className="h-32 w-32" />
-          <p className="w-full break-words text-center text-lg">
-            {file.fileName}
-          </p>
-          <p className="w-full break-words text-center text-sm">
-            {file.productName}
-          </p>
-        </Link>
-      ))
+      return (
+        <div className="grid grid-cols-12 gap-2 md:gap-5">
+          {filteredFiles.map((file, index) => (
+            <Link
+              href={`/files/${file.fileName}`}
+              target="_blank"
+              rel="noreferrer"
+              className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
+              key={index}
+            >
+              <Icons.fileText className="h-32 w-32" />
+              <p className="w-full break-words text-center text-lg">
+                {file.fileName}
+              </p>
+              <p className="w-full break-words text-center text-sm">
+                {file.productName}
+              </p>
+            </Link>
+          ))}
+        </div>
+      )
     }
     if (!category) {
-      return categoryList.map((file, index) => (
-        <Link
-          href={`/gallery/${file}`}
-          rel="noreferrer"
-          className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
-          key={index}
-        >
-          <Image
-            height="400"
-            width="400"
-            src={`https://productgallery.snoc.com.tr/files/${file}/collection.jpg`}
-            alt="image"
-          />
-          <p className="w-full break-words text-center text-lg">{file}</p>
-          <p className="w-full break-words text-center text-sm">{file}</p>
-        </Link>
-      ))
+      return (
+        <div className="grid grid-cols-12 gap-2 md:gap-5">
+          {categoryList.map((file, index) => (
+            <Link
+              href={`/gallery/${file}`}
+              rel="noreferrer"
+              className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
+              key={index}
+            >
+              <Image
+                height="400"
+                width="400"
+                src={`https://productgallery.snoc.com.tr/files/${file}/collection.jpg`}
+                alt="image"
+              />
+              <p className="w-full break-words text-center text-lg">{file}</p>
+              <p className="w-full break-words text-center text-sm">{file}</p>
+            </Link>
+          ))}
+        </div>
+      )
     }
-    return productTypeList.map((file, index) => (
-      <Link
-        href={`/gallery/${category}/${file}`}
-        rel="noreferrer"
-        className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
-        key={index}
-      >
-        <Image
-          height="400"
-          width="400"
-          src={`https://productgallery.snoc.com.tr/files/${category}/${file}/producttype.jpg`}
-          alt="image"
-        />
-        <p className="w-full break-words text-center text-lg">{file}</p>
-        <p className="w-full break-words text-center text-sm">{file}</p>
-      </Link>
-    ))
+    return (
+      <div className="grid grid-cols-12 gap-2 md:gap-5">
+        {productTypeList.map((file, index) => (
+          <Link
+            href={`/gallery/${category}/${file}`}
+            rel="noreferrer"
+            className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
+            key={index}
+          >
+            <Image
+              height="400"
+              width="400"
+              src={`https://productgallery.snoc.com.tr/files/${category}/${file}/producttype.jpg`}
+              alt="image"
+            />
+            <p className="w-full break-words text-center text-lg">{file}</p>
+            <p className="w-full break-words text-center text-sm">{file}</p>
+          </Link>
+        ))}
+      </div>
+    )
   }
 
   return (
@@ -161,26 +175,75 @@ export function FileList({
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
-        <Accordion type="single" collapsible className="px-2" defaultValue="item-1">
+        <Accordion
+          type="single"
+          collapsible
+          className="px-2"
+          defaultValue="item-1"
+        >
           <AccordionItem value="item-1">
             <AccordionTrigger>Filters</AccordionTrigger>
-            <AccordionContent>
-              <p className="font-bold">Product Type</p>
-              {fileTypeList.map((item, index) => (
-                <Link
-                  href={`/gallery/${item}`}
-                  rel="noreferrer"
-                  className=""
-                  key={index}
-                >
-                  {item}
-                </Link>
-              ))}
+            <AccordionContent className="flex flex-col">
+              <p className="font-bold">File Types</p>
+              <div className="flex flex-col gap-1">
+                {fileTypeList.map((item, index) => (
+                  <Link
+                    href={`/gallery/${item}`}
+                    rel="noreferrer"
+                    className=""
+                    key={index}
+                  >
+                    {item}
+                  </Link>
+                ))}
+              </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
-      <div className="grid grid-cols-12 gap-2 md:gap-5">{renderItems()}</div>
+      {renderItems()}
+    </div>
+  )
+}
+
+const renderAlternative = (filteredFiles: TFile[]) => {
+  const productNames = new Set<string>()
+  filteredFiles.forEach((file) => {
+    if (file.productName) {
+      productNames.add(file.productName)
+    }
+  })
+  const productNameList = Array.from(productNames)
+  return (
+    <div className="flex flex-col flex-wrap gap-5">
+      {productNameList.map((productName) => {
+        return (
+          <div className="">
+            <div className="font-bold">{productName}</div>
+            <div className="grid grid-cols-12 gap-2 md:gap-5">
+              {filteredFiles
+                .filter((file) => file.productName === productName)
+                .map((file, index) => (
+                  <Link
+                    href={`/files/${file.fileName}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
+                    key={index}
+                  >
+                    <Icons.fileText className="h-32 w-32" />
+                    <p className="w-full break-words text-center text-lg">
+                      {file.fileName}
+                    </p>
+                    <p className="w-full break-words text-center text-sm">
+                      {file.productName}
+                    </p>
+                  </Link>
+                ))}
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }
