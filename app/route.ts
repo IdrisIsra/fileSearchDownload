@@ -9,12 +9,12 @@ export async function GET(request: Request) {
   const token = cookieStore.get("referer")?.value
 
   if (token?.includes("snoc.com.tr")) {
-    redirect("/download")
+    redirect("/gallery")
   }
 
   if (referer?.includes("snoc.com.tr")) {
     cookieStore.set("referer", referer ?? "")
-    redirect("/download")
+    redirect("/gallery")
   }
 
   return new Response(

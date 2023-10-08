@@ -6,12 +6,8 @@ export const siteConfig = {
     "Snoc file download page.",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Gallery",
+      href: "/gallery",
     },
   ],
-  links: {
-    github: "https://github.com/idrisisra",
-    docs: "https://ui.shadcn.com",
-  },
 }

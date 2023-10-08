@@ -6,4 +6,5 @@ export const files = pgTable("snoc_files", {
   productId: text("product_id"),
   categoryName: text("category_name"),
   productType: text("product_type"),
+  fileType: text("filetype"),
 })

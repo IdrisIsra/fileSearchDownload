@@ -27,13 +27,19 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
+  params: { slug: string }
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({
+  children,
+  params: { slug },
+}: RootLayoutProps) {
+  const firstSlug = slug?.[0] ? decodeURIComponent(slug?.[0]) : null
+  const secondSlug = slug?.[1] ? decodeURIComponent(slug?.[1]) : null
+
   return (
     <>
       <html lang="en" suppressHydrationWarning>
-        <head />
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
@@ -42,7 +48,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
+              <SiteHeader firstSlug={firstSlug} secondSlug={secondSlug} />
               <div className="flex-1">{children}</div>
             </div>
             <TailwindIndicator />

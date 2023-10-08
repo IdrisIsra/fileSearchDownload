@@ -11,4 +11,5 @@ export type TFile = {
     productId: string | null;
     categoryName: string | null;
     productType: string | null;
+    fileType: string | null
 }

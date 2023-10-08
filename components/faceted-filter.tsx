@@ -1,18 +1,24 @@
-import * as React from "react";
-import { Check, LucideIcon, PlusCircle } from "lucide-react";
+import * as React from "react"
+import { Check, LucideIcon, PlusCircle } from "lucide-react"
 
-
-
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-
-
-
-
+import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Separator } from "@/components/ui/separator"
 
 interface FacetedFilter<TData, TValue> {
   title?: string
@@ -101,7 +107,10 @@ export function FacetedFilter<TData, TValue>({
                         )
                       } else {
                         console.log("it is not selected", option.label)
-                        console.log("setting: ", [...selectedValues, option.label])
+                        console.log("setting: ", [
+                          ...selectedValues,
+                          option.label,
+                        ])
                         setSelectedValues([...selectedValues, option.label])
                       }
                     }}

@@ -8,16 +8,22 @@ import { Icons } from "@/components/icons"
 
 interface MainNavProps {
   items?: NavItem[]
+  firstSlug: string | null
+  secondSlug: string | null
 }
 
-export function MainNav({ items }: MainNavProps) {
+export function MainNav({ items, firstSlug, secondSlug }: MainNavProps) {
   return (
-    <div className="flex gap-6">
-      <Link href="/" className="flex items-center space-x-2" aria-label="logo link">
+    <div className="flex flex-1 gap-6">
+      <Link
+        href="/gallery"
+        className="flex items-center space-x-2"
+        aria-label="logo link"
+      >
         <Icons.logo className="h-6 w-6" />
       </Link>
       {items?.length ? (
-        <nav className="flex gap-6">
+        <nav className="flex gap-1 md:gap-2">
           {items?.map(
             (item, index) =>
               item.href && (
@@ -29,10 +35,32 @@ export function MainNav({ items }: MainNavProps) {
                     item.disabled && "cursor-not-allowed opacity-80"
                   )}
                 >
-                  {item.title}
+                  {item.title} /
                 </Link>
               )
           )}
+          {firstSlug ? (
+            <Link
+              href={`/gallery/${firstSlug}`}
+              className={cn(
+                "flex items-center text-sm font-medium text-muted-foreground"
+              )}
+            >
+              {firstSlug} /
+            </Link>
+          ) : null}
+          {
+            secondSlug ? (
+              <Link
+                href={`/gallery/${firstSlug}/${secondSlug}`}
+                className={cn(
+                  "flex items-center text-sm font-medium text-muted-foreground"
+                )}
+              >
+                {secondSlug}
+              </Link>
+            ) : null
+          }
         </nav>
       ) : null}
     </div>
