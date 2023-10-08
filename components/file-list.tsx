@@ -112,7 +112,13 @@ export function FileList({
         <div className="grid grid-cols-12 gap-2 md:gap-5">
           {filteredFiles.map((file, index) => (
             <Link
-              href={`/files/${file.fileName}`}
+              href={
+                file.productType === "careSheet" ||
+                file.productType === "catalog" ||
+                file.productType === "priceList"
+                  ? `/files/${file.fileType}/${file.fileName}`
+                  : `/files/${file.categoryName}/${file.productType}/${file.productName}/${file.fileName}`
+              }
               target="_blank"
               rel="noreferrer"
               className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
@@ -196,7 +202,7 @@ export function FileList({
             <AccordionContent className="flex flex-col">
               <p className="font-bold">File Types</p>
               <div className="flex flex-col gap-1">
-                {filterItems.map(({ name, value}) => (
+                {filterItems.map(({ name, value }) => (
                   <Link
                     href={`/gallery/${value}`}
                     rel="noreferrer"
@@ -235,7 +241,7 @@ const renderAlternative = (filteredFiles: TFile[]) => {
                 .filter((file) => file.productName === productName)
                 .map((file, index) => (
                   <Link
-                    href={`/files/${file.fileName}`}
+                    href={`/files/${file.categoryName}/${file.productType}/${file.productName}/${file.fileName}`}
                     target="_blank"
                     rel="noreferrer"
                     className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
