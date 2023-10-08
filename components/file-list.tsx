@@ -23,6 +23,16 @@ type FileListProps = {
   isImageView: boolean
 }
 
+const filterItems = [
+  { name: "Image Bank", value: "imageBank" },
+  { name: "Product Sheets", value: "productSheet" },
+  { name: "2D Files", value: "2d" },
+  { name: "3D Files", value: "3d" },
+  { name: "Care Sheets", value: "careSheet" },
+  { name: "Catalogs", value: "catalog" },
+  { name: "Price Lists", value: "priceList" },
+]
+
 export function FileList({
   allFiles,
   initialSearch,
@@ -186,14 +196,14 @@ export function FileList({
             <AccordionContent className="flex flex-col">
               <p className="font-bold">File Types</p>
               <div className="flex flex-col gap-1">
-                {fileTypeList.map((item, index) => (
+                {filterItems.map(({ name, value}) => (
                   <Link
-                    href={`/gallery/${item}`}
+                    href={`/gallery/${value}`}
                     rel="noreferrer"
                     className=""
-                    key={index}
+                    key={name}
                   >
-                    {item}
+                    {name}
                   </Link>
                 ))}
               </div>
