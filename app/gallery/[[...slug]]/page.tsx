@@ -2,9 +2,11 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { db } from "@/db"
 
-import { FileList } from "@/components/file-list"
+import { FileList, filterItems } from "@/components/file-list"
 
 export const dynamic = "auto"
+
+const fileTypes = ["imageBank", "productSheet", "2d", "3d", "careSheet", "catalog", "priceList"]
 
 export default async function IndexPage({
   params,
@@ -17,7 +19,6 @@ export default async function IndexPage({
 
   const categoryNames = new Set<string>()
   const productTypes = new Set<string>()
-  const fileTypes = new Set<string>()
 
   allFiles.forEach((file) => {
     if (file.categoryName) {
@@ -26,29 +27,31 @@ export default async function IndexPage({
     if (file.productType) {
       productTypes.add(file.productType)
     }
-    if (file.fileType) {
-      fileTypes.add(file.fileType)
-    }
   })
 
   const firstSlug = params.slug?.[0]
   const secondSlug = params.slug?.[1]
+  const thirdSlug = params.slug?.[2]
 
   const decodedSecondSlug = decodeURIComponent(secondSlug)
+  const decodedThirdSlug = decodeURIComponent(thirdSlug)
 
   const initialSearch = firstSlug === "search" ? secondSlug : ""
-  const initialCategory = categoryNames.has(firstSlug) ? firstSlug : ""
-  const initialProductType = productTypes.has(decodedSecondSlug)
-    ? decodedSecondSlug
+  const initialFileType = fileTypes.includes(firstSlug) || firstSlug === 'all' ? firstSlug : ""
+  const initialCategory = categoryNames.has(decodedSecondSlug) ? decodedSecondSlug : ""
+  const initialProductType = productTypes.has(decodedThirdSlug)
+    ? decodedThirdSlug
     : ""
-  const initialFileType = fileTypes.has(firstSlug) ? firstSlug : ""
 
-  if (!referer?.includes("snoc.com.tr")) {
-    redirect("/")
-  }
+  // if (!referer?.includes("snoc.com.tr")) {
+  //   redirect("/")
+  // }
 
   const isImageView = () => {
     if (!firstSlug) {
+      return true
+    }
+    if (!secondSlug) {
       return true
     }
     if (!!initialCategory && !initialProductType) {

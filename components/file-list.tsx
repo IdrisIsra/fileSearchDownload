@@ -23,7 +23,7 @@ type FileListProps = {
   isImageView: boolean
 }
 
-const filterItems = [
+export const filterItems = [
   { name: "Image Bank", value: "imageBank" },
   { name: "Product Sheets", value: "productSheet" },
   { name: "2D Files", value: "2d" },
@@ -50,17 +50,17 @@ export function FileList({
     let files = allFiles
     if (category.length) {
       files = files.filter((file) => {
-        if (file.categoryName) return category.includes(file.categoryName)
+        if (file.categoryName) return category === file.categoryName
       })
     }
     if (productType.length) {
       files = files.filter((file) => {
-        if (file.productType) return productType.includes(file.productType)
+        if (file.productType) return productType === file.productType
       })
     }
-    if (fileType.length) {
+    if (fileType.length && fileType !== "all") {
       files = files.filter((file) => {
-        if (file.fileType) return fileType.includes(file.fileType)
+        if (file.fileType) return fileType === file.fileType
       })
     }
     files = files.filter((file) => {
@@ -103,19 +103,21 @@ export function FileList({
     return Array.from(fileTypes)
   }, [allFiles])
 
+  const isWeirdCategory = (str: string | null) => {
+    return str === "careSheet" || str === "catalog" || str === "priceList"
+  }
+
   const renderItems = () => {
     if (category && productType) {
       return renderAlternative(filteredFiles)
     }
-    if (!isImageView || search) {
+    if (!isImageView || search || isWeirdCategory(fileType)) {
       return (
         <div className="grid grid-cols-12 gap-2 md:gap-5">
           {filteredFiles.map((file, index) => (
             <Link
               href={
-                file.productType === "careSheet" ||
-                file.productType === "catalog" ||
-                file.productType === "priceList"
+                isWeirdCategory(file.productType)
                   ? `/files/${file.fileType}/${file.fileName}`
                   : `/files/${file.categoryName}/${file.productType}/${file.productName}/${file.fileName}`
               }
@@ -141,7 +143,11 @@ export function FileList({
         <div className="grid grid-cols-12 gap-2 md:gap-5">
           {categoryList.map((file, index) => (
             <Link
-              href={`/gallery/${file}`}
+              href={
+                fileType
+                  ? `/gallery/${fileType ?? "all"}/${file}`
+                  : `/gallery/all/${file}`
+              }
               rel="noreferrer"
               className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
               key={index}
@@ -163,7 +169,11 @@ export function FileList({
       <div className="grid grid-cols-12 gap-2 md:gap-5">
         {productTypeList.map((file, index) => (
           <Link
-            href={`/gallery/${category}/${file}`}
+            href={
+              fileType
+                ? `/gallery/${fileType}/${category}/${file}`
+                : `/gallery/all/${category}/${file}`
+            }
             rel="noreferrer"
             className="col-span-6 flex cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 hover:bg-secondary md:col-span-3 md:p-5"
             key={index}
@@ -202,16 +212,27 @@ export function FileList({
             <AccordionContent className="flex flex-col">
               <p className="font-bold">File Types</p>
               <div className="flex flex-col gap-1">
-                {filterItems.map(({ name, value }) => (
-                  <Link
-                    href={`/gallery/${value}`}
-                    rel="noreferrer"
-                    className=""
-                    key={name}
-                  >
-                    {name}
-                  </Link>
-                ))}
+                {filterItems.map(({ name, value }) =>
+                  isWeirdCategory(value) ? (
+                    <Link
+                      href={`/gallery/${value}`}
+                      rel="noreferrer"
+                      className=""
+                      key={name}
+                    >
+                      {name}
+                    </Link>
+                  ) : (
+                    <Link
+                      href={`/gallery/${value}` + (category ? `/${category}` : "") + (productType ? `/${productType}` : "")}
+                      rel="noreferrer"
+                      className=""
+                      key={name}
+                    >
+                      {name}
+                    </Link>
+                  )
+                )}
               </div>
             </AccordionContent>
           </AccordionItem>
