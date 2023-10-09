@@ -43,9 +43,9 @@ export default async function IndexPage({
     ? decodedThirdSlug
     : ""
 
-  // if (!referer?.includes("snoc.com.tr")) {
-  //   redirect("/")
-  // }
+  if (!referer?.includes("snoc.com.tr")) {
+    redirect("/")
+  }
 
   const isImageView = () => {
     if (!firstSlug) {
