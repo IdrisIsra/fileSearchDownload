@@ -107,6 +107,10 @@ export function FileList({
     return str === "careSheet" || str === "catalog" || str === "priceList"
   }
 
+  const getPrettyFileName = (fileName: string) => {
+    return filterItems.find((item) => item.value === fileType)?.name 
+  }
+
   const renderItems = () => {
     if (category && productType) {
       return renderAlternative(filteredFiles)
@@ -117,8 +121,8 @@ export function FileList({
           {filteredFiles.map((file, index) => (
             <Link
               href={
-                isWeirdCategory(file.productType)
-                  ? `/files/${file.fileType}/${file.fileName}`
+                isWeirdCategory(file.fileType)
+                  ? `/files/${getPrettyFileName(file.fileType!)}/${file.fileName}`
                   : `/files/${file.categoryName}/${file.productType}/${file.productName}/${file.fileName}`
               }
               target="_blank"
